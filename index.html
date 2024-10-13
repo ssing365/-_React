@@ -1,44 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
-  <script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
-  <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <script type="text/babel">
-    const root = document.getElementById("root");
 
-    const App = () => {
-      const [minutes, setMinutes] = React.useState();
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
 
-      const onChange = (event) => {
-        setMinutes(event.target.value);
-      };
+<body>
+  <div id="root"></div>
+</body>
+<script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+  const root = document.getElementById("root");
 
-      return (
-        <>
-          <h1>Super Converter</h1>
-          <label htmlFor="minutes">Minutes</label>
-          <input
-            onChange={onChange}
-            value={minutes}
-            id="minutes"
-            placeholder="minutes"
-            type="number"
-          ></input>
-          <h3>You want to convert {minutes}</h3>
-          <label htmlFor="hours">Hours</label>
-          <input id="hours" placeholder="hours" type="number"></input>
-        </>
-      );
+  const App = () => {
+    const [amount, setAmount] = React.useState();
+    const [flipped, setFlipped] = React.useState(false);
+    const onChange = (event) => {
+      setAmount(event.target.value);
     };
+    const reset = () => {
+      setAmount(0)
+    }
+    const onFlip = () => {
+      reset()
+      setFlipped(current => !current)
+    }
+    return (
+      <>
+        <h1>Super Converter</h1>
+        <label htmlFor="minutes">Minutes</label>
+        <input
+          onChange={onChange}
+          value={flipped ? amount * 60 : amount}
+          id="minutes"
+          placeholder="minutes"
+          type="number"
+          disabled={flipped}
+        />
+        <label htmlFor="hours">Hours</label>
+        <input
+          onChange={onChange}
+          value={!flipped ? amount / 60 : amount}
+          id="hours"
+          placeholder="hours"
+          type="number"
+          disabled={!flipped}
+        />
+        <button onClick={reset}>Reset</button>
+        <button onClick={onFlip}>flip</button>
+      </>
+    );
+  };
 
-    ReactDOM.render(<App />, root);
-  </script>
+  ReactDOM.render(<App />, root);
+</script>
+
 </html>
