@@ -29,7 +29,7 @@ const App = () => {
     <div>
       <h1>The Coins!</h1>
       <hr />
-      <strong>{loding ? "Loading..." : <select onChange={onChangeOption} value={selectedCoin ? selectedCoin.id : ""} className={styles.select}>
+      <strong>{loding ? "Loading..." : <select onChange={onChangeOption} className={styles.select}>
         {coins.map((coin) =>
           <option key={coin.id} value={coin.id}> {coin.name} ({coin.symbol}) : ${(coin.quotes.USD.price)} </option>
         )}
